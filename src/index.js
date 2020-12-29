@@ -1,17 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import GenerateCertificate from './services/generate_certificate';
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+import {formatCertificateBuffer, formatPrivateKeyBuffer} from './utils';
+
+const App = () => {
+
+  const [firstCertBuffer, setFirstCertBuffer] = useState(new ArrayBuffer(0));
+  const [secondCertBuffer, setSecondCertBuffer] = useState(new ArrayBuffer(0));
+
+  const [firstPrivateKeyBuffer, setFirstPrivateKeyBuffer] = useState(new ArrayBuffer(0));
+  const [secondPrivateKeyBuffer, setSecondPrivateKeyBuffer] = useState(new ArrayBuffer(0));
+
+  const handleGenerateCertificates = () => {
+    GenerateCertificate()
+    .then(result => {
+      setFirstCertBuffer(result.certificateBuffer);
+      setFirstPrivateKeyBuffer(result.privateKeyBuffer);
+      return GenerateCertificate();
+    })
+    .then(result => {
+      setSecondCertBuffer(result.certificateBuffer);
+      setSecondPrivateKeyBuffer(result.privateKeyBuffer);
+    });
+  }
+
+  return (
+    <>
+      <div>
+        <button onClick={handleGenerateCertificates}>Generate Certificates</button>
+      </div>
+      <div className="inline">
+        <h3>First certificate</h3>
+        <textarea value={formatCertificateBuffer(firstCertBuffer)}></textarea>
+        <textarea value={formatPrivateKeyBuffer(firstPrivateKeyBuffer)}></textarea>
+      </div>
+      <div className="inline">
+        <h3>Second Certificate</h3>
+        <textarea value={formatCertificateBuffer(secondCertBuffer)}></textarea>
+        <textarea value={formatPrivateKeyBuffer(secondPrivateKeyBuffer)}></textarea>
+      </div>
+    </>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById('root')) 
