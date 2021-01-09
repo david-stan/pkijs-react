@@ -195,7 +195,7 @@ function SetupNewCertificate() {
 }
 
 function GenerateCertificate() {
-    return SetupNewCertificate().then(() => {
+    return SetupNewCertificate().then(() => {   
         return {certificateBuffer, privateKeyBuffer}
     }, error => {
         if (error instanceof Object) {

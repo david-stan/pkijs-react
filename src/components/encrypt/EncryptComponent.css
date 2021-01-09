@@ -1,0 +1,9 @@
+.private-key-container {
+    width: 50%;
+}
+
+.copy-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,35 @@
+.private-key-container {
+    display:flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-container {
+    min-width: 200px;
+    flex: 2;
+    margin-left: 20px;
+}
+
+.select-container select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    max-width: 220px;
+    height: 40px;
+    margin: 5px 0px;
+    padding: 0px 24px;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #eefbfb;
+    background-color: #12232E;
+    background-image: none;
+    border: 1px solid #eefbfb;
+    -ms-word-break: normal;
+    word-break: normal;
+    background-image: url('./drop-down-arrow.png');
+    background-repeat: no-repeat;
+    background-position-x: 90%;
+    background-position-y: 50%;
+  }

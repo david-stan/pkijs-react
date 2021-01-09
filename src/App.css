@@ -1,38 +1,123 @@
-.App {
-  text-align: center;
+body {
+  background: #2b6381;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.body-container {
+  max-width: 90%;
+  margin: 15px auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
   display: flex;
   flex-direction: column;
+}
+
+.column-container {
+  background: #12232E;
+  padding: 20px;
+  color: #eefbfb;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  list-style: none;
+  margin-bottom: 15px;
+}
+
+.file-container {
+  background: #12232E;
+  padding: 20px;
+  color: #eefbfb;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+  list-style: none;
+  margin-bottom: 15px;
+}
+
+.inner-file-container {
+  display: flex;
+}
+
+.button-container {
+  display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.info {
+  flex: 4;
+  margin-left: 10px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input-file {
+  height: 0px;
+  width: 0px;
+  overflow: hidden;
+}
+
+textarea {
+  width: 95%;
+  border: solid 1px #999;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  height: 400px;
+  font: normal 12px/15px monospace;
+  margin: 10px;
+  min-width: 400px;
+  max-width: 600px;
+}
+
+button {
+  margin: 10px;
+  height: 40px;
+  width: 130px;
+  color:#eefbfb;
+  background-color: #12232E;
+  border: 0.1em solid #eefbfb;
+  transition: all 0.2s;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+button:hover {
+  color:#12232E;
+  background-color: #eefbfb;
+}
+
+input {
+  margin-left: 10px;
+  height: 40px;
+  color:#eefbfb;
+  background-color: #12232E;
+  border: 0.1em solid #eefbfb;
+  transition: all 0.2s;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.label {
+  color:#eefbfb;
+  padding: 8px;
+  margin-left: 10px;
+}
+
+.success {
+  background-color: #4caf50;
+}
+
+.warning {
+  background-color: #f44336;
 }
