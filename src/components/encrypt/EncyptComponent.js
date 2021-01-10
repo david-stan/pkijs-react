@@ -62,7 +62,6 @@ const EncryptComponent = (props) => {
     }
 
     const handleUpload = () => {
-        console.log(props);
         document.getElementById("upload").click();
     }
 
