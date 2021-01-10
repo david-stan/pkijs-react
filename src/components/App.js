@@ -1,6 +1,6 @@
 import {
     BrowserRouter as Router,
-    Switch, Route, Link, Redirect
+    Switch, Route, Redirect
 } from 'react-router-dom';
 
 import Header from './header/Header';

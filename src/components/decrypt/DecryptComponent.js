@@ -105,8 +105,8 @@ const DecryptComponent = () => {
                         <div className="status">
                             File upload success:
                         {uploadSuccess
-                                ? <span class="label success"></span>
-                                : <span class="label warning"></span>}
+                                ? <span className="label success"></span>
+                                : <span className="label warning"></span>}
                         </div>
                     </div>
                     <div className="inner-file-container">
@@ -119,8 +119,8 @@ const DecryptComponent = () => {
                         <div className="status">
                             Encryption success:
                         {decryptionSuccess
-                                ? <span class="label success"></span>
-                                : <span class="label warning"></span>}
+                                ? <span className="label success"></span>
+                                : <span className="label warning"></span>}
                         </div>
                     </div>
                     <div className="inner-file-container">
@@ -133,8 +133,8 @@ const DecryptComponent = () => {
                         <div className="status">
                             Download success:
                         {downloadSuccess
-                                ? <span class="label success"></span>
-                                : <span class="label warning"></span>}
+                                ? <span className="label success"></span>
+                                : <span className="label warning"></span>}
                         </div>
                     </div>
 
