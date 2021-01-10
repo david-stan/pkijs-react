@@ -2,17 +2,14 @@ import { useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { formatPrivateKeyBuffer } from '../../utils/utils';
 
+import { mimeTypeService, firstKeyService, secondKeyService, firstCertService, secondCertService } from '../../services/store';
+
 import GenerateCertificate from '../../services/generate_certificate';
 import encrypt from '../../services/encrypt';
 
 import './EncryptComponent.css';
 
-const EncryptComponent = () => {
-    const [firstCertBuffer, setFirstCertBuffer] = useState(new ArrayBuffer(0));
-    const [secondCertBuffer, setSecondCertBuffer] = useState(new ArrayBuffer(0));
-
-    const [firstPrivateKeyBuffer, setFirstPrivateKeyBuffer] = useState(new ArrayBuffer(0));
-    const [secondPrivateKeyBuffer, setSecondPrivateKeyBuffer] = useState(new ArrayBuffer(0));
+const EncryptComponent = (props) => {
 
     const [encryptedBuffer, setEncryptedBuffer] = useState(new ArrayBuffer(0));
 
@@ -28,13 +25,13 @@ const EncryptComponent = () => {
     const handleGenerateCertificates = () => {
         GenerateCertificate()
             .then(result => {
-                setFirstCertBuffer(result.certificateBuffer);
-                setFirstPrivateKeyBuffer(result.privateKeyBuffer);
+                firstCertService.sendCert(result.certificateBuffer);
+                firstKeyService.sendKey(result.privateKeyBuffer);
                 return GenerateCertificate();
             })
             .then(result => {
-                setSecondCertBuffer(result.certificateBuffer);
-                setSecondPrivateKeyBuffer(result.privateKeyBuffer);
+                secondCertService.sendCert(result.certificateBuffer);
+                secondKeyService.sendKey(result.privateKeyBuffer);
                 setEncryptionSuccess(false);
                 setDownloadSuccess(false);
                 toast.success('Certificates generated successfully!');
@@ -50,7 +47,7 @@ const EncryptComponent = () => {
             return;
         }
         if (uploadSuccess) {
-            encrypt(firstCertBuffer, secondCertBuffer, fileInput)
+            encrypt(props.firstCert, props.secondCert, fileInput)
                 .then(buffer => {
                     setEncryptedBuffer(buffer);
                     setEncryptionSuccess(true);
@@ -65,6 +62,7 @@ const EncryptComponent = () => {
     }
 
     const handleUpload = () => {
+        console.log(props);
         document.getElementById("upload").click();
     }
 
@@ -75,8 +73,8 @@ const EncryptComponent = () => {
 
         reader.onload = function (e) {
             let arrayBuffer = reader.result
-            console.log(arrayBuffer);
             setFileInput(arrayBuffer);
+            mimeTypeService.sendType(file.type);
         }
         reader.readAsArrayBuffer(file);
         setUploadSuccess(true);
@@ -85,7 +83,7 @@ const EncryptComponent = () => {
 
     const handleDownloadEncrypted = () => {
         if (encryptionSuccess) {
-            const blob = new Blob([encryptedBuffer]);
+            const blob = new Blob([encryptedBuffer], {type: 'application/octet-stream'});
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
             link.download = `encrypted-${+new Date()}`;
@@ -126,14 +124,14 @@ const EncryptComponent = () => {
                         <p>Certificate Index 0 PKCS#8 Private Key</p>
                         <button className="copy-button" onClick={copyToClipboardFirst}>Copy key</button>
                     </div>
-                    <textarea ref={textAreaRefFirst} readOnly value={formatPrivateKeyBuffer(firstPrivateKeyBuffer)}></textarea>
+                    <textarea ref={textAreaRefFirst} readOnly value={formatPrivateKeyBuffer(props.firstKey)}></textarea>
                 </div>
                 <div className="private-key-container">
                     <div className="copy-container">
                         <p>Certificate Index 1 PKCS#8 Private Key</p>
                         <button className="copy-button" onClick={copyToClipboardSecond}>Copy key</button>
                     </div>
-                    <textarea ref={textAreaRefSecond} readOnly value={formatPrivateKeyBuffer(secondPrivateKeyBuffer)}></textarea>
+                    <textarea ref={textAreaRefSecond} readOnly value={formatPrivateKeyBuffer(props.secondKey)}></textarea>
                 </div>
             </div>
             <div className="file-container">

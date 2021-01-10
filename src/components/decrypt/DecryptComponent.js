@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-
 import decrypt from '../../services/decrypt';
 import { pkcs8ToArrayBuffer } from '../../utils/utils';
 
 import './DecryptComponent.css';
 
-const DecryptComponent = () => {
+const DecryptComponent = (props) => {
     const [privateKeyString, setPrivateKeyString] = useState("");
     const [fileInput, setFileInput] = useState({});
     const [decryptedContent, setDecryptedContent] = useState(new ArrayBuffer(0));
@@ -61,7 +60,7 @@ const DecryptComponent = () => {
 
     const handleDownloadDecrypted = () => {
         if (decryptionSuccess) {
-            const blob = new Blob([decryptedContent]);
+            const blob = new Blob([decryptedContent], {type: props.mimeType});
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
             link.download = `decrypted-${+new Date()}`;
